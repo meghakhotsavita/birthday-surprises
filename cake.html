@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cut the Cake</title>
+
+<style>
+
+/* Page */
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+background:linear-gradient(#ff9eb5,#ffc0cb);
+text-align:center;
+overflow:hidden;
+}
+
+/* Title */
+
+h1{
+font-size:40px;
+margin-bottom:20px;
+}
+
+/* Cake container */
+
+.cake-container{
+position:relative;
+cursor:pointer;
+}
+
+/* Cake */
+
+.cake{
+font-size:150px;
+transition:0.4s;
+}
+
+.cake:hover{
+transform:scale(1.1);
+}
+
+/* Candles */
+
+.candles{
+position:absolute;
+top:-40px;
+left:50%;
+transform:translateX(-50%);
+font-size:35px;
+}
+
+/* Knife */
+
+.knife{
+font-size:60px;
+position:absolute;
+right:-90px;
+top:40px;
+opacity:0;
+transition:1s;
+}
+
+/* Slice */
+
+.slice{
+font-size:80px;
+position:absolute;
+top:40px;
+left:40px;
+opacity:0;
+transition:1s;
+}
+
+/* Message */
+
+.msg{
+margin-top:25px;
+font-size:28px;
+display:none;
+}
+
+/* Button */
+
+.btn{
+margin-top:25px;
+padding:12px 28px;
+font-size:18px;
+border:none;
+background:#ff4d6d;
+color:white;
+border-radius:30px;
+cursor:pointer;
+display:none;
+}
+
+/* Floating hearts */
+
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+
+}
+
+/* Fireworks canvas */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎂 Click Cake to Cut</h1>
+
+<div class="cake-container" onclick="cutCake()">
+
+<div class="candles" id="candles">🕯🕯🕯</div>
+
+<div class="cake" id="cakeEmoji">🎂</div>
+
+<div class="knife" id="knife">🔪</div>
+
+<div class="slice" id="slice">🍰</div>
+
+</div>
+
+<div class="msg" id="msg">
+🎉 Happy Birthday! 🎉
+</div>
+
+<button class="btn" id="btn" onclick="goLetter()">
+Read Birthday Letter 💌
+</button>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+
+/* Floating hearts */
+
+for(let i=0;i<20;i++){
+
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="💖"
+
+heart.style.left=Math.random()*100+"vw"
+heart.style.animationDuration=(4+Math.random()*4)+"s"
+
+document.body.appendChild(heart)
+
+}
+
+/* Cake cutting */
+
+function cutCake(){
+
+document.getElementById("candles").innerHTML="🔥🔥🔥"
+
+const knife=document.getElementById("knife")
+knife.style.opacity=1
+knife.style.transform="translateX(-90px)"
+
+setTimeout(()=>{
+
+document.getElementById("cakeEmoji").innerHTML="🍰"
+
+const slice=document.getElementById("slice")
+slice.style.opacity=1
+slice.style.transform="translateY(120px)"
+
+startFireworks()
+
+document.getElementById("msg").style.display="block"
+document.getElementById("btn").style.display="inline-block"
+
+},1000)
+
+}
+
+/* Next page */
+
+function goLetter(){
+window.location.href="letter.html"
+}
+
+/* Fireworks */
+
+const canvas=document.getElementById("fireworks")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+function startFireworks(){
+
+for(let i=0;i<150;i++){
+
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+dx:(Math.random()-0.5)*8,
+dy:(Math.random()-0.5)*8,
+size:Math.random()*3+2
+})
+
+}
+
+animate()
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+particles.forEach(p=>{
+
+p.x+=p.dx
+p.y+=p.dy
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
+ctx.fill()
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+</script>
+
+</body>
+</html>

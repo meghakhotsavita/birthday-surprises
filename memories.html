@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Memories</title>
+
+<style>
+
+/* Reset */
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+/* Background */
+
+body{
+font-family:Arial;
+background:linear-gradient(#ffc0cb,#ffb6c1);
+text-align:center;
+}
+
+/* Title */
+
+h1{
+margin:40px 0;
+font-size:40px;
+}
+
+/* Corkboard */
+
+.corkboard{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+padding:40px;
+background:#c79a63;
+}
+
+/* Polaroid */
+
+.polaroid{
+background:white;
+padding:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+position:relative;
+transform:rotate(-2deg);
+transition:0.3s;
+cursor:pointer;
+}
+
+.polaroid:hover{
+transform:scale(1.05) rotate(0deg);
+}
+
+.polaroid img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.polaroid p{
+margin-top:8px;
+font-size:14px;
+}
+
+.pin{
+width:14px;
+height:14px;
+background:red;
+border-radius:50%;
+position:absolute;
+top:-7px;
+left:50%;
+transform:translateX(-50%);
+}
+
+/* Viewer */
+
+#viewer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
+
+/* Image */
+
+#viewer img{
+max-width:90%;
+max-height:80%;
+border-radius:10px;
+transition:0.4s;
+cursor:zoom-in;
+}
+
+/* Zoom */
+
+.zoom{
+transform:scale(1.5);
+cursor:zoom-out;
+}
+
+/* Close */
+
+.close{
+position:absolute;
+top:25px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+/* Arrows */
+
+.arrow{
+position:absolute;
+top:50%;
+font-size:60px;
+color:white;
+cursor:pointer;
+user-select:none;
+}
+
+.left{
+left:40px;
+}
+
+.right{
+right:40px;
+}
+
+/* Navigation */
+
+.nav{
+margin:40px;
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.nav a{
+text-decoration:none;
+font-size:18px;
+background:white;
+padding:10px 20px;
+border-radius:20px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+.corkboard{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:500px){
+.corkboard{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📸 Memories</h1>
+
+<div class="corkboard">
+
+<div class="polaroid"><img src="images/photo1.jpg" onclick="openViewer(0)"><p>Four years have passed since your graduation, but your guidance still inspires us ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo2.jpg" onclick="openViewer(1)"><p>Every song feels beautiful when you sing ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo3.jpg" onclick="openViewer(2)"><p>Your life is blessed with two priceless gifts — your mother's love and your brother's support ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo4.jpg" onclick="openViewer(3)"><p>Sisters share laughter, secrets, and endless love ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo5.jpg" onclick="openViewer(4)"><p>I’m lucky to have friends like you who guide me whenever I need help ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo6.jpg" onclick="openViewer(5)"><p>Your family is your greatest strength and biggest blessing ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo7.jpg" onclick="openViewer(6)"><p>College Memories — Best Student ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo8.jpg" onclick="openViewer(7)"><p>Cousins are childhood friends who grow up together ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo9.jpg" onclick="openViewer(8)"><p>Your smile is your greatest strength 🤩</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo12.jpg" onclick="openViewer(9)"><p>Special Memory ❤️</p><div class="pin"></div></div>
+
+<div class="polaroid"><img src="images/photo14.jpg" onclick="openViewer(10)"><p>NSS Camp ❤️</p><div class="pin"></div></div>
+
+</div>
+
+<div class="nav">
+<a href="video.html">🎥 Watch Birthday Video</a>
+</div>
+
+<!-- Viewer -->
+
+<div id="viewer">
+
+<span class="close" onclick="closeViewer()">✖</span>
+
+<span class="arrow left" onclick="prev()">❮</span>
+
+<img id="viewerImg">
+
+<span class="arrow right" onclick="next()">❯</span>
+
+</div>
+
+<script>
+
+const images=[
+"images/photo1.jpg",
+"images/photo2.jpg",
+"images/photo3.jpg",
+"images/photo4.jpg",
+"images/photo5.jpg",
+"images/photo6.jpg",
+"images/photo7.jpg",
+"images/photo8.jpg",
+"images/photo9.jpg",
+"images/photo12.jpg",
+"images/photo14.jpg"
+]
+
+let index=0
+let slide
+
+function openViewer(i){
+
+index=i
+
+document.getElementById("viewer").style.display="flex"
+document.getElementById("viewerImg").src=images[index]
+
+startSlide()
+
+}
+
+function closeViewer(){
+
+document.getElementById("viewer").style.display="none"
+clearInterval(slide)
+
+}
+
+function next(){
+
+index=(index+1)%images.length
+document.getElementById("viewerImg").src=images[index]
+
+}
+
+function prev(){
+
+index=(index-1+images.length)%images.length
+document.getElementById("viewerImg").src=images[index]
+
+}
+
+document.getElementById("viewerImg").onclick=function(){
+
+this.classList.toggle("zoom")
+
+}
+
+function startSlide(){
+
+slide=setInterval(next,3000)
+
+}
+
+</script>
+
+</body>
+</html>

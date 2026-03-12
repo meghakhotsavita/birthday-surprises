@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Video</title>
+
+<style>
+
+/* Page */
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(#ffb6c1,#ffc0cb);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+text-align:center;
+}
+
+/* Title */
+
+h1{
+margin-bottom:20px;
+font-size:40px;
+}
+
+/* Message */
+
+.msg{
+font-size:20px;
+margin-bottom:25px;
+}
+
+/* Video container */
+
+.video{
+width:90%;
+max-width:420px;
+height:640px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+border-radius:15px;
+overflow:hidden;
+background:white;
+}
+
+/* Instagram embed */
+
+.video iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* Button */
+
+.btn{
+margin-top:30px;
+text-decoration:none;
+background:white;
+padding:12px 25px;
+border-radius:25px;
+font-size:18px;
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+color:black;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#ffe6f0;
+transform:scale(1.05);
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+h1{
+font-size:28px;
+}
+
+.video{
+height:520px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎥 Birthday Video</h1>
+
+<div class="msg">
+A special video just for you ❤️
+</div>
+
+<div class="video">
+
+<iframe
+src="https://www.instagram.com/reel/DIWeX-bTjB6/embed"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<a class="btn" href="index.html">🎉 Start Celebration Again</a>
+
+</body>
+
+</html>

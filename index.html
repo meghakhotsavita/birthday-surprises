@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<style>
+
+/* Page */
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
+background:linear-gradient(#ff9eb5,#ffc0cb);
+overflow:hidden;
+text-align:center;
+}
+
+/* Gift */
+
+.gift{
+position:relative;
+width:160px;
+height:160px;
+cursor:pointer;
+}
+
+/* Box */
+
+.box{
+width:160px;
+height:100px;
+background:#ff4d6d;
+position:absolute;
+bottom:0;
+border-radius:10px;
+}
+
+/* Lid */
+
+.lid{
+width:170px;
+height:40px;
+background:#ff758f;
+position:absolute;
+top:0;
+left:-5px;
+border-radius:10px;
+transition:0.7s;
+}
+
+/* Cat */
+
+.cat{
+position:absolute;
+font-size:70px;
+top:40px;
+left:45px;
+opacity:0;
+transition:0.7s;
+}
+
+/* Message bubble */
+
+.bubble{
+position:absolute;
+bottom:-300px;
+background:white;
+padding:20px 30px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+font-size:24px;
+transition:1s;
+}
+
+/* Button */
+
+.btn{
+margin-top:20px;
+padding:12px 25px;
+font-size:18px;
+border:none;
+background:#ff4d6d;
+color:white;
+border-radius:30px;
+cursor:pointer;
+display:none;
+}
+
+/* Floating hearts */
+
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+
+}
+
+/* Confetti */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="gift" onclick="openGift()">
+
+<div class="lid"></div>
+
+<div class="box"></div>
+
+<div class="cat">🐱</div>
+
+</div>
+
+<div class="bubble" id="bubble">
+
+Meow! 🎉 <br>
+Someone has a birthday today!
+
+<br><br>
+
+<button class="btn" id="btn" onclick="goCake()">
+Cut the Birthday Cake 🎂
+</button>
+
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+
+/* Floating hearts */
+
+for(let i=0;i<25;i++){
+
+let heart=document.createElement("div")
+
+heart.className="heart"
+heart.innerHTML="💖"
+
+heart.style.left=Math.random()*100+"vw"
+heart.style.animationDuration=(4+Math.random()*4)+"s"
+
+document.body.appendChild(heart)
+
+}
+
+/* Gift open */
+
+function openGift(){
+
+document.querySelector(".lid").style.transform="translateY(-80px) rotate(-15deg)"
+
+document.querySelector(".cat").style.opacity=1
+
+document.getElementById("bubble").style.bottom="120px"
+
+document.getElementById("btn").style.display="inline-block"
+
+startConfetti()
+
+}
+
+/* Redirect to cake page */
+
+function goCake(){
+
+window.location.href="cake.html"
+
+}
+
+/* Confetti */
+
+const canvas=document.getElementById("confetti")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let pieces=[]
+
+for(let i=0;i<150;i++){
+
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*6+4,
+d:Math.random()*10
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+for(let i=0;i<pieces.length;i++){
+
+let p=pieces[i]
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fill()
+
+}
+
+update()
+
+requestAnimationFrame(draw)
+
+}
+
+function update(){
+
+for(let i=0;i<pieces.length;i++){
+
+let p=pieces[i]
+
+p.y+=Math.cos(p.d)+1
+
+if(p.y>canvas.height){
+p.y=0
+}
+
+}
+
+}
+
+function startConfetti(){
+
+draw()
+
+}
+
+</script>
+
+</body>
+</html>
