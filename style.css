@@ -1,0 +1,148 @@
+
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background:linear-gradient(135deg,#ffd1dc,#ff9eb5);
+text-align:center;
+overflow-x:hidden;
+}
+
+/* hero */
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+/* gift */
+
+.gift-box{
+position:relative;
+width:150px;
+height:150px;
+cursor:pointer;
+}
+
+.box{
+width:150px;
+height:100px;
+background:#ff4d6d;
+position:absolute;
+bottom:0;
+border-radius:10px;
+}
+
+.lid{
+width:160px;
+height:40px;
+background:#ff758f;
+position:absolute;
+top:0;
+left:-5px;
+border-radius:10px;
+transition:0.6s;
+}
+
+.cat{
+position:absolute;
+font-size:60px;
+top:40px;
+left:45px;
+opacity:0;
+transition:0.6s;
+}
+
+/* hearts */
+
+.hearts::before,
+.hearts::after{
+content:"💖 💗 💕 💞";
+position:absolute;
+animation:floatHearts 8s linear infinite;
+font-size:25px;
+}
+
+@keyframes floatHearts{
+0%{transform:translateY(100px);opacity:0}
+50%{opacity:1}
+100%{transform:translateY(-600px);opacity:0}
+}
+
+/* corkboard */
+
+.corkboard{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+padding:40px;
+background:#c79a63;
+}
+
+.polaroid{
+background:white;
+padding:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+transform:rotate(-2deg);
+position:relative;
+}
+
+.polaroid img{
+width:100%;
+}
+
+.pin{
+width:12px;
+height:12px;
+background:red;
+border-radius:50%;
+position:absolute;
+top:-6px;
+left:50%;
+transform:translateX(-50%);
+}
+
+/* scroll */
+
+.scroll{
+max-width:600px;
+margin:80px auto;
+background:#f5e6c8;
+padding:40px;
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+font-family:serif;
+}
+
+/* nav */
+
+.nav{
+margin:40px;
+display:flex;
+justify-content:center;
+gap:30px;
+}
+
+.video{
+margin-top:40px;
+}
+
+.back{
+display:inline-block;
+margin:30px;
+font-size:20px;
+text-decoration:none;
+}
+
+/* responsive */
+
+@media(max-width:768px){
+
+.corkboard{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
